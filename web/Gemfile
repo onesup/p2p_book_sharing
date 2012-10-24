@@ -12,18 +12,40 @@ gem 'mysql2'
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  #gem 'coffee-rails', '~> 3.2.1'
+  #css framework for using mixins
+  gem 'compass-rails'
+  gem 'bootstrap-sass'  
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 
+#parsing
+gem 'nokogiri'
+
+#jquery 
 gem 'jquery-rails'
 
+#form simple generator --with bootstrap #or blueprint
+#gem 'simple-form'
+
+#photo, file asset manager
+gem 'carrierwave'
+
+#authentications
+gem 'devise'
+
+#test
+group :development, :test do 
+  gem 'rspec-rails'
+  gem 'guard'
+end 
+
+
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

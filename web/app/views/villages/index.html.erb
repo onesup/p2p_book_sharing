@@ -1,0 +1,31 @@
+<h1>Listing villages</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Si</th>
+    <th>Gu</th>
+    <th>Dong</th>
+    <th>Village</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @villages.each do |village| %>
+  <tr>
+    <td><%= village.code %></td>
+    <td><%= village.si %></td>
+    <td><%= village.gu %></td>
+    <td><%= village.dong %></td>
+    <td><%= village.village %></td>
+    <td><%= link_to 'Show', village %></td>
+    <td><%= link_to 'Edit', edit_village_path(village) %></td>
+    <td><%= link_to 'Destroy', village, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Village', new_village_path %>

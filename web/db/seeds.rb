@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+t.string   "code"
+t.string   "si"
+t.string   "gu"
+t.string   "dong"
+t.string   "village"
+
+villages = Village.create(
+[
+  {code: ''},  {si: ''},  {gu: ''},  {dong: ''},  {village: ''}
+])
