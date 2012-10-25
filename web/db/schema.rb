@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20121023010544) do
 
   create_table "villages", :force => true do |t|
-    t.string   "code"
+    t.string   "url"
     t.string   "si"
     t.string   "gu"
     t.string   "dong"

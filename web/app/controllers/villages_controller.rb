@@ -7,6 +7,7 @@ class VillagesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @villages }
+      format.csv { render csv: @villages }
     end
   end
 

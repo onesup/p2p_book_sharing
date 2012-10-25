@@ -1,84 +1,78 @@
+# coding : utf-8
 require 'open-uri'
 
 class CrawlingVillage
 
   #CrawlingVillage.start
-  #CrawlingVillage.get_images
-  #CrawlingVillage.making_item_type_cache
-
-  def self.get_item(url_list)
-    items = Array.new
-    url_list.each do |url|
-      doc 
-      doc.xpath('//div[@id="diablo3Main"]//script[1]').each do |s|
-        items << CrawlingItem.parse_item(s)
-      end
-    end
-    items
+        
+  def self.put_item(item)
+    i         = Village.new
+    i.url     = item[:url]
+    i.si      = item[:si]
+    i.gu      = item[:gu]
+    i.dong    = item[:dong]
+    i.village = item[:village]
+    i.save
+    puts i.si + " " + i.gu + " " + i.dong + " " + i.village
   end
         
-  def self.put_item(items)
-    items.each do |item|
-      unless item.nil?
-        i           = DiabloItem.new
-        i.item_name = item[:itemname]
-        i.item_code = item[:itemcode]
-        i.charclass = item[:charclass]
-        i.rarity    = item[:rerity]
-        i.reqlevel  = item[:reqlevel]
-        i.itemtype  = item[:itemtype]
-        i.itemslot  = item[:itemslot]
-        i.aps       = item[:aps]
-        i.sellvalue = item[:sellvalue]
-        i.info      = item
-        i.save
-      end
-    end
+  def self.sido
+    sido_list = Array.new
+    sido_list = [
+      {:region => "서울시", :url => "/maemul/area/1100000/A1A3A4/*/summary"},
+      {:region => "경기", :url => "/maemul/area/1410000/A1A3A4/*/summary"},
+      {:region => "인천시", :url => "/maemul/area/1400000/A1A3A4/*/summary"},
+      {:region => "부산시", :url => "/maemul/area/1600000/A1A3A4/*/summary"},
+      {:region => "대구시", :url => "/maemul/area/1700000/A1A3A4/*/summary"},
+      {:region => "대전시", :url => "/maemul/area/1300000/A1A3A4/*/summary"},
+      {:region => "울산시", :url => "/maemul/area/1680000/A1A3A4/*/summary"},
+      {:region => "광주시", :url => "/maemul/area/1500000/A1A3A4/*/summary"},
+      {:region => "세종시", :url => "/maemul/area/1320000/A1A3A4/*/summary"},
+      {:region => "충남", :url => "/maemul/area/1310000/A1A3A4/*/summary"},
+      {:region => "충북", :url => "/maemul/area/1360000/A1A3A4/*/summary"},
+      {:region => "강원", :url => "/maemul/area/1200000/A1A3A4/*/summary"},
+      {:region => "경북", :url => "/maemul/area/1710000/A1A3A4/*/summary"},
+      {:region => "경남", :url => "/maemul/area/1620000/A1A3A4/*/summary"},
+      {:region => "전북", :url => "/maemul/area/1560000/A1A3A4/*/summary"},
+      {:region => "전남", :url => "/maemul/area/1510000/A1A3A4/*/summary"},
+      {:region => "제주", :url => "/maemul/area/1690000/A1A3A4/*/summary"}
+    ]
   end
-        
-  def self.parse_item(script)
-    eval(script.text.gsub(/\s/,'').match(/\{itemcode.+?\}/).to_s)
-  end
-        
-  def self.get_list
-    url = "http://realestate.daum.net/maemul/area/1100000/A1A3A4/*/"
+  
+  def self.get_list(region)
     list = Array.new
+    url = "http://realestate.daum.net" + region[:url]
     doc = Nokogiri::HTML(open(url))
-    doc.xpath('//div[@id="leftAgencyBody"]//ul//li//a/text()').each do |a|
-
-        list << a.content
-
+    doc.xpath('//div[@id="leftAgencyBody"]//ul//li//a').each do |a|
+      unless a["href"] == "#"
+        list << {:region => a.text, :url => a["href"]}
+        # puts list.last[:region]
+      end
     end
     list
   end
-                
-  def self.start
-    256.times do |i|
-      puts "page" + i.to_s
-      a = CrawlingItem.put_item(CrawlingItem.get_item(CrawlingItem.get_list(i)))
-    end
-  end
         
-  def self.test
-    a = CrawlingItem.get_item(CrawlingItem.get_list(0))
-    a.each do |i|
-      unless i.nil?
-        puts i[:sellvalue].to_s+":"+i[:itemname]
+  def self.start
+    sido = CrawlingVillage.sido
+    villages = Array.new
+    sido.each do |sido|
+      CrawlingVillage.get_list(sido).each do |gu|
+        CrawlingVillage.get_list(gu).each do |dong|
+          CrawlingVillage.get_list(dong).each do |village|
+            puts sido[:region] + " " + gu[:region]+ " " + dong[:region]+ " " + village[:region]
+            village = {
+              :si    => sido[:region], 
+              :gu   => gu[:region], 
+              :dong    => dong[:region], 
+              :village => village[:region],
+              :url => village[:url]
+            }
+            CrawlingVillage.put_item(village)
+          end
+        end
       end
     end
-  end
-        
-  def self.get_images
-    DiabloItem.all.each do |i|
-      self.get_image(i)
-    end
-  end
-  
-  def self.get_image(item)
-    p = Photo.new
-    p.remote_photo_url = "http://img.inven.co.kr/image_2011/site_image/diablo3/dataninfo/itemicon/" + item.info[:icon] + "_demonhunter_male.png"
-    item.photos << p
-    item.save
+    villages
   end
 
 end
