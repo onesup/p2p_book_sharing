@@ -1,4 +1,6 @@
 Web::Application.routes.draw do
+  resources :books
+
   resources :villages
 
   # The priority is based upon order of creation:

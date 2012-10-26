@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @book.title %>
+</p>
+
+<p>
+  <b>First category:</b>
+  <%= @book.first_category %>
+</p>
+
+<p>
+  <b>Second category:</b>
+  <%= @book.second_category %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @book.author %>
+</p>
+
+<p>
+  <b>Publisher:</b>
+  <%= @book.publisher %>
+</p>
+
+<p>
+  <b>Published at:</b>
+  <%= @book.published_at %>
+</p>
+
+<p>
+  <b>Language:</b>
+  <%= @book.language %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%= @book.size %>
+</p>
+
+<p>
+  <b>Last page:</b>
+  <%= @book.last_page %>
+</p>
+
+<p>
+  <b>Isbn10:</b>
+  <%= @book.isbn10 %>
+</p>
+
+<p>
+  <b>Isbn13:</b>
+  <%= @book.isbn13 %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @book.price %>
+</p>
+
+<p>
+  <b>Reviewed:</b>
+  <%= @book.reviewed %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @book.description %>
+</p>
+
+<p>
+  <b>Index:</b>
+  <%= @book.index %>
+</p>
+
+<p>
+  <b>Series:</b>
+  <%= @book.series %>
+</p>
+
+
+<%= link_to 'Edit', edit_book_path(@book) %> |
+<%= link_to 'Back', books_path %>
