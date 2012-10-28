@@ -1,0 +1,29 @@
+<h1>Listing book_urls</h1>
+
+<table>
+  <tr>
+    <th>Url</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Published at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @book_urls.each do |book_url| %>
+  <tr>
+    <td><%= book_url.url %></td>
+    <td><%= book_url.title %></td>
+    <td><%= book_url.author %></td>
+    <td><%= book_url.published_at %></td>
+    <td><%= link_to 'Show', book_url %></td>
+    <td><%= link_to 'Edit', edit_book_url_path(book_url) %></td>
+    <td><%= link_to 'Destroy', book_url, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Book url', new_book_url_path %>

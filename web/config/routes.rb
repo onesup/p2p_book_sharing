@@ -1,4 +1,8 @@
 Web::Application.routes.draw do
+  resources :book_urls
+
+  resources :list_pages
+
   resources :books
 
   resources :villages

@@ -1,0 +1,2 @@
+module BookUrlsHelper
+end

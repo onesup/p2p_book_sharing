@@ -1,11 +1,13 @@
 class CreateBooks < ActiveRecord::Migration
   def change
     create_table :books do |t|
+      t.string :url
       t.string :title
       t.string :foreign_title
       t.string :first_category
       t.string :second_category
-      t.string :author
+      t.string :authors
+      t.string :main_author
       t.string :publisher
       t.datetime :published_at
       t.string :language
