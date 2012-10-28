@@ -76,7 +76,7 @@ class CrawlingBook
         puts "skip"
       end
     end
-    CrawlingBook.get_list_doc(nav_info)
+    nav_info
   end
   
   def self.get_list_doc(nav_info = {})
@@ -102,14 +102,12 @@ class CrawlingBook
     l.max_value = nav_info[:max_value],
     l.page_action = nav_info[:page_action]
     l.save
-    begin "Errno::ECONNRESET"
+    begin 
       doc = Nokogiri::HTML(open(url))
-    rescue
+    rescue "Errno::ECONNRESET"
       puts "connection error:::" + url
     end
-    if nav_info[:page] <= nav_info[:last_page]
-      CrawlingBook.get_list(doc, nav_info)
-    end
+    doc
   end
   
   def self.get_list_last_page(option = {})
@@ -169,9 +167,12 @@ class CrawlingBook
   end
   
   def self.test
-    # url = "http://book.daum.net/detail/book.do?bookid=KOR9788967257040"
-    # doc = Nokogiri::HTML(open(url))
-    CrawlingBook.categories.each{|i| puts i[:name]}
+    category = "KOR01"
+    last_page = CrawlingBook.get_list_last_page(:category => category)
+    nav_info = {:page => 1, :last_page => last_page, :category => category}
+    doc = CrawlingBook.get_list_doc(nav_info)
+    nav_info = CrawlingBook.get_list(doc, nav_info)
+    nav_info
   end
         
   def self.start
@@ -179,7 +180,12 @@ class CrawlingBook
     CrawlingBook.categories.each do |c|
       category = c[:code]
       last_page = CrawlingBook.get_list_last_page(:category => category)
-      CrawlingBook.get_list_doc({:page => 1, :last_page => last_page, :category => category})
+      nav_info = {:page => 1, :last_page => last_page, :category => category}
+      last_page = 4
+      last_page.times do |p|
+        doc = CrawlingBook.get_list_doc(nav_info)
+        nav_info = CrawlingBook.get_list(doc, nav_info)
+      end
       BookUrl.all.each do |i|
         
         book = CrawlingBook.parse_item(i.url)
