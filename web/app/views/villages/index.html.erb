@@ -1,4 +1,6 @@
 <h1>Listing villages</h1>
+<%= logged_in? %>
+<%= current_user.email %>
 <%= link_to "CSV", villages_path(format: "csv")%>
 <table>
   <tr>

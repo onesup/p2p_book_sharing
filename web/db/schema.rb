@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121027135316) do
+ActiveRecord::Schema.define(:version => 20121031131459) do
 
   create_table "book_urls", :force => true do |t|
     t.string   "url"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20121027135316) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "book_urls", ["url"], :name => "url"
 
   create_table "books", :force => true do |t|
     t.string   "url"
@@ -44,7 +46,10 @@ ActiveRecord::Schema.define(:version => 20121027135316) do
     t.datetime "updated_at",      :null => false
   end
 
+  add_index "books", ["url"], :name => "url"
+
   create_table "list_pages", :force => true do |t|
+    t.string   "category"
     t.string   "url"
     t.integer  "page"
     t.string   "min_value"
@@ -52,6 +57,34 @@ ActiveRecord::Schema.define(:version => 20121027135316) do
     t.string   "page_action"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "shelves", :force => true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.string   "isbn13"
+    t.integer  "village_id"
+    t.string   "status"
+    t.string   "memo"
+    t.text     "history"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "username"
+    t.string   "email",            :null => false
+    t.string   "crypted_password"
+    t.string   "salt"
+    t.string   "head_title"
+    t.string   "tail_title"
+    t.string   "mobile"
+    t.string   "gender"
+    t.datetime "birth"
+    t.integer  "book_count"
+    t.integer  "deal_count"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "villages", :force => true do |t|

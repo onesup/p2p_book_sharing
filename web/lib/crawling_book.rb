@@ -30,31 +30,6 @@ class CrawlingBook
     i.series = item[:series]
     i.save
   end
-
-  def self.parse_list
-    ListPage.all.each do |p|
-      unless p.max_value.nil?
-        url = "http://book.daum.net/category/book.do?cTab=06&disrate=0&sortType=1&recentType=0&viewType=01&saleStatus=1"
-        url = url + "&categoryID=KOR01"
-        url = url + "&pageAction=" + p.page_action
-        url = url + "&maxValue=" + p.max_value + "&minValue=" + p.min_value
-        url = url + "&pageNo=" + p.page.to_s
-        puts "@@@@@@" + p.page.to_s + "@@@@@@"
-        doc = Nokogiri::HTML(open(url))
-        doc.xpath('//div[@id="page_body"]//ul[@class="listType"]//li/dl/dt/a').each do |book|
-          unless BookUrl.exists?(:url => book["href"])
-            b = BookUrl.new
-            b.url = book["href"]
-            b.title = book.text
-            b.save
-          else
-            puts "skip"
-          end
-        end
-        puts url
-      end
-    end
-  end
   
   def self.get_list(doc, nav_info = {})
     list = Array.new    
@@ -95,14 +70,7 @@ class CrawlingBook
       url = url + "&maxValue=&minValue="
     end
     url = url + "&pageNo=" + nav_info[:page].to_s
-    l = ListPage.new
-    l.url = url,
-    l.page = nav_info[:page],
-    l.min_value = nav_info[:min_value],
-    l.max_value = nav_info[:max_value],
-    l.page_action = nav_info[:page_action]
-    l.save
-    begin 
+    begin
       doc = Nokogiri::HTML(open(url))
     rescue "Errno::ECONNRESET"
       puts "connection error:::" + url
@@ -175,58 +143,66 @@ class CrawlingBook
     nav_info
   end
         
-  def self.start
+  def self.start(code)
     start_time = Time.now
-    CrawlingBook.categories.each do |c|
-      category = c[:code]
-      last_page = CrawlingBook.get_list_last_page(:category => category)
-      nav_info = {:page => 1, :last_page => last_page, :category => category}
-      last_page = 4
-      last_page.times do |p|
-        doc = CrawlingBook.get_list_doc(nav_info)
-        nav_info = CrawlingBook.get_list(doc, nav_info)
-      end
+    # CrawlingBook.categories.each do |c|
+      # category = code
+      # last_page = CrawlingBook.get_list_last_page(:category => category)
+      # nav_info = {:page => 1, :last_page => last_page, :category => category}
+      # last_page.times do |p|
+      #   doc = CrawlingBook.get_list_doc(nav_info)
+      # 
+      #   nav_info = CrawlingBook.get_list(doc, nav_info)
+      #   
+      # end
       BookUrl.all.each do |i|
-        
-        book = CrawlingBook.parse_item(i.url)
-        CrawlingBook.put_item(book)
+        if i.id > 70937
+          puts i.id
+          unless Book.exists?(:url => "http://book.daum.net" + i.url)
+            puts i.id
+            book = CrawlingBook.parse_item(i.url)
+            CrawlingBook.put_item(book)
+          end
+        end
       end
       end_time = ((Time.now - start_time)/60).to_s
-      puts c[:name] + "크롤링 시간:" + end_time + "min"
+      puts c[:name] + " 크롤링 시간:" + end_time + "min"
       c[:time] = end_time
-    end
-    CrawlingBook.categories.each do |c|
-      puts c[:name] + c[:time] + 분
-    end
+    # end
   end
   
   def self.categories
     [
-      # {:name => "독일 소설", :code => "KOR0112"}, #for test. that category has just 87pages.
-      {:name => "소설", :code => "KOR01"}
+      {:name => "독일 소설", :code => "KOR0112"} #for test. that category has just 87pages.
+      
+      # {:name => "소설", :code => "KOR01"},
       # {:name => "시·에세이", :code => "KOR03"},
       # {:name => "경제·경영", :code => "KOR13"},
       # {:name => "자기계발", :code => "KOR15"},
       # {:name => "유아", :code => "KOR41"},
       # {:name => "아동", :code => "KOR42"},
+      
       # {:name => "중·고 학습", :code => "KOR25"},
       # {:name => "어린이영어", :code => "KOR45"},
       # {:name => "초등학습", :code => "KOR39"},
       # {:name => "청소년", :code => "KOR38"},
       # {:name => "취업·수험서", :code => "KOR31"},
       # {:name => "가정·생활", :code => "KOR07"},
+
       # {:name => "예술·대중문화", :code => "KOR23"},
       # {:name => "취미·스포츠", :code => "KOR11"},
       # {:name => "요리", :code => "KOR08"},
       # {:name => "건강", :code => "KOR09"},
       # {:name => "여행", :code => "KOR32"},
       # {:name => "외국어", :code => "KOR27"},
+      
       # {:name => "사전", :code => "KOR37"},
       # {:name => "잡지", :code => "KOR35"},
       # {:name => "만화", :code => "KOR47"},
       # {:name => "인문", :code => "KOR05"},
       # {:name => "종교", :code => "KOR21"},
       # {:name => "정치사회", :code => "KOR17"},
+      
       # {:name => "역사문화", :code => "KOR19"},
       # {:name => "과학", :code => "KOR29"},
       # {:name => "기술·공학", :code => "KOR26"},

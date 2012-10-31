@@ -1,6 +1,7 @@
 class CreateListPages < ActiveRecord::Migration
   def change
     create_table :list_pages do |t|
+      t.string :category
       t.string :url
       t.integer :page
       t.string :min_value

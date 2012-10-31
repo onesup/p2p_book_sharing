@@ -1,3 +1,8 @@
+<%= semantic_form_for @book do |f| %>
+<%=f.label :title %>
+  <%=f.autocomplete_field :title, autocomplete_title_books_path%>
+<% end %>
+
 <%= form_for(@book) do |f| %>
   <% if @book.errors.any? %>
     <div id="error_explanation">
@@ -24,8 +29,8 @@
     <%= f.text_field :second_category %>
   </div>
   <div class="field">
-    <%= f.label :author %><br />
-    <%= f.text_field :author %>
+    <%= f.label :main_author %><br />
+    <%= f.text_field :main_author %>
   </div>
   <div class="field">
     <%= f.label :publisher %><br />

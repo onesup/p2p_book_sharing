@@ -36,8 +36,12 @@ gem 'jquery-rails'
 #photo, file asset manager
 gem 'carrierwave'
 
+#autocomplete
+gem 'rails3-jquery-autocomplete'
+gem 'simple_form'
+
 #authentications
-gem 'devise'
+gem "sorcery"
 
 #test
 group :development, :test do 

@@ -1,8 +1,9 @@
 class BooksController < ApplicationController
+  autocomplete :title, :full => true
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = Book.limit(20)
 
     respond_to do |format|
       format.html # index.html.erb

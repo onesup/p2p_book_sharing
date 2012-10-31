@@ -1,10 +1,28 @@
 Web::Application.routes.draw do
+  resources :sessions
+  
+  resources :password_resets
+
+  resources :users do 
+    resources :shelves
+    collection do
+      get 'search'
+    end
+  end
+
+  get "logout" => "sessions#destroy", :as => "logout"
+  get "login" => "sessions#new", :as => "login"
+  get "signup" => "users#new", :as => "signup"
+  get "my_page" => "users#my_page", :as => "my_page"
+
+  resources :shelves
+
   resources :book_urls
 
   resources :list_pages
 
   resources :books
-
+  
   resources :villages
 
   # The priority is based upon order of creation:
