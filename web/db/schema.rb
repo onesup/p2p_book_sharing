@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031131459) do
+ActiveRecord::Schema.define(:version => 20121102051954) do
 
   create_table "book_urls", :force => true do |t|
     t.string   "url"
@@ -44,9 +44,21 @@ ActiveRecord::Schema.define(:version => 20121031131459) do
     t.string   "series"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "collection_id"
   end
 
   add_index "books", ["url"], :name => "url"
+
+  create_table "collections", :force => true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.integer  "village_id"
+    t.string   "status"
+    t.string   "memo"
+    t.text     "history"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "list_pages", :force => true do |t|
     t.string   "category"
@@ -57,18 +69,6 @@ ActiveRecord::Schema.define(:version => 20121031131459) do
     t.string   "page_action"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "shelves", :force => true do |t|
-    t.integer  "book_id"
-    t.integer  "user_id"
-    t.string   "isbn13"
-    t.integer  "village_id"
-    t.string   "status"
-    t.string   "memo"
-    t.text     "history"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

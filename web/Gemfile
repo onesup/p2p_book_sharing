@@ -30,9 +30,6 @@ gem 'nokogiri'
 #jquery 
 gem 'jquery-rails'
 
-#form simple generator --with bootstrap #or blueprint
-#gem 'simple-form'
-
 #photo, file asset manager
 gem 'carrierwave'
 

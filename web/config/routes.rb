@@ -1,21 +1,21 @@
 Web::Application.routes.draw do
+  resources :collections
+
   resources :sessions
   
   resources :password_resets
 
   resources :users do 
-    resources :shelves
+    resources :collections
     collection do
       get 'search'
     end
   end
 
-  get "logout" => "sessions#destroy", :as => "logout"
-  get "login" => "sessions#new", :as => "login"
-  get "signup" => "users#new", :as => "signup"
+  get "logout"  => "sessions#destroy", :as => "logout"
+  get "login"   => "sessions#new", :as => "login"
+  get "signup"  => "users#new", :as => "signup"
   get "my_page" => "users#my_page", :as => "my_page"
-
-  resources :shelves
 
   resources :book_urls
 

@@ -151,12 +151,11 @@ class CrawlingBook
       # nav_info = {:page => 1, :last_page => last_page, :category => category}
       # last_page.times do |p|
       #   doc = CrawlingBook.get_list_doc(nav_info)
-      # 
       #   nav_info = CrawlingBook.get_list(doc, nav_info)
-      #   
       # end
+      
       BookUrl.all.each do |i|
-        if i.id > 70937
+        if i.id > 184025
           puts i.id
           unless Book.exists?(:url => "http://book.daum.net" + i.url)
             puts i.id

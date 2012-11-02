@@ -11,4 +11,19 @@ class UsersController < ApplicationController
       render :new
     end
   end
+  
+  def show
+  end
+  
+  # GET /villages
+  # GET /villages.json
+  def index
+    @users = User.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @users }
+      format.csv { render csv: @users }
+    end
+  end
 end
