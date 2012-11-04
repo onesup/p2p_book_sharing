@@ -143,31 +143,34 @@ class CrawlingBook
     nav_info
   end
         
-  def self.start(code)
+  def self.start
+    code = "KOR13"
+    CrawlingBook.url_start(code)
+  end
+  
+  def self.url_start(code)
     start_time = Time.now
-    # CrawlingBook.categories.each do |c|
-      # category = code
-      # last_page = CrawlingBook.get_list_last_page(:category => category)
-      # nav_info = {:page => 1, :last_page => last_page, :category => category}
-      # last_page.times do |p|
-      #   doc = CrawlingBook.get_list_doc(nav_info)
-      #   nav_info = CrawlingBook.get_list(doc, nav_info)
-      # end
-      
-      BookUrl.all.each do |i|
-        if i.id > 184025
+    last_page = CrawlingBook.get_list_last_page(:category => code)
+    nav_info = {:page => 1, :last_page => last_page + 1, :category => code}
+    last_page.times do |p|
+      puts p.to_s + "/" + last_page.to_s
+      doc = CrawlingBook.get_list_doc(nav_info)
+      nav_info = CrawlingBook.get_list(doc, nav_info)
+    end
+  end
+  
+  def self.book_start(start_record)
+    start_record ||= 271227 #303685
+    BookUrl.all.each do |i|
+      if i.id > start_record
+        puts i.id
+        unless Book.exists?(:url => "http://book.daum.net" + i.url)
           puts i.id
-          unless Book.exists?(:url => "http://book.daum.net" + i.url)
-            puts i.id
-            book = CrawlingBook.parse_item(i.url)
-            CrawlingBook.put_item(book)
-          end
+          book = CrawlingBook.parse_item(i.url)
+          CrawlingBook.put_item(book)
         end
       end
-      end_time = ((Time.now - start_time)/60).to_s
-      puts c[:name] + " 크롤링 시간:" + end_time + "min"
-      c[:time] = end_time
-    # end
+    end
   end
   
   def self.categories
@@ -178,34 +181,37 @@ class CrawlingBook
       # {:name => "시·에세이", :code => "KOR03"},
       # {:name => "경제·경영", :code => "KOR13"},
       # {:name => "자기계발", :code => "KOR15"},
+      # 
       # {:name => "유아", :code => "KOR41"},
       # {:name => "아동", :code => "KOR42"},
-      
       # {:name => "중·고 학습", :code => "KOR25"},
       # {:name => "어린이영어", :code => "KOR45"},
+      
       # {:name => "초등학습", :code => "KOR39"},
       # {:name => "청소년", :code => "KOR38"},
       # {:name => "취업·수험서", :code => "KOR31"},
       # {:name => "가정·생활", :code => "KOR07"},
-
+      
       # {:name => "예술·대중문화", :code => "KOR23"},
       # {:name => "취미·스포츠", :code => "KOR11"},
       # {:name => "요리", :code => "KOR08"},
       # {:name => "건강", :code => "KOR09"},
-      # {:name => "여행", :code => "KOR32"},
-      # {:name => "외국어", :code => "KOR27"},
       
+      # {:name => "여행", :code => "KOR32"},
+      # {:name => "외국어", :code => "KOR27"},      
       # {:name => "사전", :code => "KOR37"},
       # {:name => "잡지", :code => "KOR35"},
+      
       # {:name => "만화", :code => "KOR47"},
       # {:name => "인문", :code => "KOR05"},
       # {:name => "종교", :code => "KOR21"},
-      # {:name => "정치사회", :code => "KOR17"},
+      # {:name => "정치사회", :code => "KOR17"},      
       
       # {:name => "역사문화", :code => "KOR19"},
       # {:name => "과학", :code => "KOR29"},
       # {:name => "기술·공학", :code => "KOR26"},
       # {:name => "컴퓨터·IT", :code => "KOR33"},
+      
       # {:name => "영어도서", :code => "ENG"},
       # {:name => "일본도서", :code => "JAP"}
     ]

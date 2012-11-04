@@ -7,6 +7,8 @@ class CreateCollections < ActiveRecord::Migration
       t.string :status
       t.string :memo
       t.text :history
+      t.string :isbn13
+      
 
       t.timestamps
     end

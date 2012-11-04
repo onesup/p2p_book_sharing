@@ -1,14 +1,26 @@
 Web::Application.routes.draw do
-  resources :collections
+  resources :deals
+
+  resources :collections do
+    resources :deals
+  end
 
   resources :sessions
   
   resources :password_resets
 
-  resources :users do 
-    resources :collections
-    collection do
-      get 'search'
+  resources :users do
+    resources :deals
+    resources :collections do
+      collection do
+        get 'search'
+      end
+    end
+  end
+
+  resources :villages do
+    member do
+      get :collections
     end
   end
 
@@ -22,8 +34,6 @@ Web::Application.routes.draw do
   resources :list_pages
 
   resources :books
-  
-  resources :villages
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

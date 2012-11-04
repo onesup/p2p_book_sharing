@@ -2,14 +2,14 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :book_id, :collection => Book.limit(4), :as => :radio_buttons, :label => "책" %>
-    <%= f.input :user_id, :as => :hidden, :input_html => { :value => @user.id } %>
+    <%= f.input :book_id, :collection => @books, :as => :radio_buttons, :label => "책" %>
+    <%= f.input :user_id, :as => :hidden, :input_html => { :value => params[:user_id] } %>
+		<%= f.input :village_id, :as => :hidden, :input_html => { :value => @user.village.id } %>
     
   </div>
 
   <div class="form-actions">
     <%= f.submit "확인", :class => "btn btn-primary" %>
-    <%= link_to "취소", user_collections_path(@user.id), :class => "btn" %> 
+    <%= link_to "취소", user_collections_path(params[:user_id]), :class => "btn" %> 
   </div>
 <% end %>
-

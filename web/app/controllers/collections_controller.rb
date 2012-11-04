@@ -6,8 +6,9 @@ class CollectionsController < ApplicationController
   # GET /collections
   # GET /collections.json
   def index
-    @collections = @user.collections.limit(10).order(:updated_at => :desc)
-
+    if params[:user_id]
+      @collections = @user.collections.order("updated_at desc")
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @collections }
@@ -18,7 +19,6 @@ class CollectionsController < ApplicationController
   # GET /collections/1.json
   def show
     @collection = Collection.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @collection }
@@ -29,6 +29,7 @@ class CollectionsController < ApplicationController
   # GET /collections/new.json
   def new
     @collection = Collection.new
+    @books = Book.search(params[:q])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +49,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to @collection, notice: 'Collection was successfully created.' }
+        format.html { redirect_to user_collections_path(@collection.user_id), notice: 'Collection was successfully created.' }
         format.json { render json: @collection, status: :created, location: @collection }
       else
         format.html { render action: "new" }
@@ -64,7 +65,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       if @collection.update_attributes(params[:collection])
-        format.html { redirect_to @collection, notice: 'Collection was successfully updated.' }
+        format.html { redirect_to user_collections_path(@collection.user_id), notice: 'Collection was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -80,7 +81,7 @@ class CollectionsController < ApplicationController
     @collection.destroy
 
     respond_to do |format|
-      format.html { redirect_to collections_url }
+      format.html { redirect_to user_collections_path(@collection.user_id) }
       format.json { head :no_content }
     end
   end
@@ -88,10 +89,9 @@ class CollectionsController < ApplicationController
 private  
 
   def get_user
-  	if User.exists?(params[:user_id])
+  	if params[:user_id] && User.exists?(params[:user_id])
       @user = User.find(params[:user_id])
-    else
-      redirect_to root_path, :notice => "잘못된 접근입니다."
-  	end
+    end
   end
+  
 end

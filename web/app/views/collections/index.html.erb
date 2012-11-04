@@ -1,29 +1,21 @@
-<h1>Listing collections</h1>
-
+<h1><%= @user.email %>님의 장서</h1>
+<h2>장서 추가</h2>
+<%= form_tag new_user_collection_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :q, params[:q] %>
+  </p>
+	<p>
+		<%= submit_tag 'Search', :name => nil %>
+	</p>
+<% end %>
+<h2>현재 장서</h2>
 <table>
-  <tr>
-    <th>Book</th>
-    <th>User</th>
-    <th>Village</th>
-    <th>Status</th>
-    <th>Memo</th>
-    <th>History</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
 <% @collections.each do |collection| %>
   <tr>
-    <td><%= collection.book_id %></td>
-    <td><%= collection.user_id %></td>
-    <td><%= collection.village_id %></td>
+    <td><%= link_to collection.book.title, edit_user_collection_path(params[:user_id], collection.id) %> - <%= collection.book.series %> | <%= collection.book.main_author%></td>
     <td><%= collection.status %></td>
     <td><%= collection.memo %></td>
-    <td><%= collection.history %></td>
-    <td><%= link_to 'Show', collection %></td>
-    <td><%= link_to 'Edit', edit_collection_path(collection) %></td>
-    <td><%= link_to 'Destroy', collection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to '삭제', collection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

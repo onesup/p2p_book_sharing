@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   
+  has_many :selling_deals, :class_name => 'Deal', :foreign_key => 'seller_id'
+  has_many :buying_deals, :class_name => 'Deal', :foreign_key => 'buyer_id'
+  
   has_many :collections
+  belongs_to :village
   
   attr_accessible :last_login_at, :username, :password, :password_confirmation, :email
   

@@ -15,11 +15,23 @@ class VillagesController < ApplicationController
   # GET /villages/1.json
   def show
     @village = Village.find(params[:id])
+    @collections = @village.collections
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @village }
     end
+  end
+  
+  def collections
+    @village = Village.find(params[:id])
+    @collections = @village.collections
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @village }
+    end
+    
   end
 
   # GET /villages/new

@@ -1,0 +1,33 @@
+<h1>'<%= @deal.collection.book.title %>' 서적을 <%= @deal.mobile %>님이 나눠보길 원합니다.</h1>
+<h2><%= @collection.book.title %> - <%= @collection.book.series %></h2>
+<ul>
+	<li> <%= @collection.status %></li>
+	<li>지은이: <%= @collection.book.main_author %></li>
+	<li>출판사: <%= @collection.book.publisher %></li>
+	<li><%= @collection.book.size %></li>
+	<li><%= @collection.book.isbn10 %></li>
+	<li><%= @collection.book.isbn13 %></li>
+	<li><%= @collection.book.description %></li>
+</ul>
+<% if @collection.memo %>
+	<h3>이 책을 나누고 싶은 이유</h3>
+	<p><%= @collection.memo %></p>
+<% end %>
+<h3>요청자 정보</h3>
+<ul>
+	<li>연락처: <%= @deal.mobile %></li>
+	<li>전하는 말: <%= @deal.memo %></li>
+</ul>
+
+<%= simple_form_for(@deal, :html => {:class => 'form-horizontal'}) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+		<%= f.input :status, :as => :radio_buttons, :collection => [["좋아요", "approved"],["싫어요. 다음에.", "denied"]] %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "확인", :class => "btn btn-primary" %>
+    <%= link_to "취소", user_collections_path(params[:user_id]), :class => "btn" %> 
+  </div>
+<% end %>

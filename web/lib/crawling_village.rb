@@ -53,9 +53,9 @@ class CrawlingVillage
   end
         
   def self.start
-    sido = CrawlingVillage.sido
+    sido_list = CrawlingVillage.sido
     villages = Array.new
-    sido.each do |sido|
+    sido_list.each do |sido|
       CrawlingVillage.get_list(sido).each do |gu|
         CrawlingVillage.get_list(gu).each do |dong|
           CrawlingVillage.get_list(dong).each do |village|

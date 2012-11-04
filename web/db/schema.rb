@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102051954) do
+ActiveRecord::Schema.define(:version => 20121104171723) do
 
   create_table "book_urls", :force => true do |t|
     t.string   "url"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(:version => 20121102051954) do
     t.integer  "collection_id"
   end
 
+  add_index "books", ["isbn13", "isbn10", "authors"], :name => "isbn10"
+  add_index "books", ["title"], :name => "series"
   add_index "books", ["url"], :name => "url"
 
   create_table "collections", :force => true do |t|
@@ -56,8 +58,22 @@ ActiveRecord::Schema.define(:version => 20121102051954) do
     t.string   "status"
     t.string   "memo"
     t.text     "history"
+    t.string   "isbn13"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "deals", :force => true do |t|
+    t.integer  "village_id"
+    t.integer  "seller_id"
+    t.integer  "buyer_id"
+    t.integer  "collection_id"
+    t.integer  "point"
+    t.string   "mobile"
+    t.string   "memo"
+    t.string   "status"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "list_pages", :force => true do |t|
@@ -83,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20121102051954) do
     t.datetime "birth"
     t.integer  "book_count"
     t.integer  "deal_count"
+    t.integer  "village_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end

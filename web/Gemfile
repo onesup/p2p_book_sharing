@@ -44,6 +44,7 @@ gem "sorcery"
 group :development, :test do 
   gem 'rspec-rails'
   gem 'guard'
+  gem 'thin'
 end 
 
 

@@ -12,7 +12,8 @@ class SorceryCore < ActiveRecord::Migration
       t.datetime :birth
       t.integer :book_count
       t.integer :deal_count
-
+      t.integer :village_id
+      
       t.timestamps
     end
   end

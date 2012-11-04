@@ -1,35 +1,16 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Book:</b>
-  <%= @collection.book_id %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @collection.user_id %>
-</p>
-
-<p>
-  <b>Village:</b>
-  <%= @collection.village_id %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @collection.status %>
-</p>
-
-<p>
-  <b>Memo:</b>
-  <%= @collection.memo %>
-</p>
-
-<p>
-  <b>History:</b>
-  <%= @collection.history %>
-</p>
-
-
-<%= link_to 'Edit', edit_collection_path(@collection) %> |
-<%= link_to 'Back', collections_path %>
+<h1><%= @collection.user.email %>님의 장서</h1>
+<ul>
+	<li><%= link_to "빌려볼래요", new_collection_deal_path(@collection.id)%></li>
+</ul>
+<h2><%= @collection.book.title %> - <%= @collection.book.series %></h2>
+<ul>
+	<li><%= @collection.status %></li>
+	<li><%= @collection.book.main_author %></li>
+	<li><%= @collection.book.publisher %></li>
+	<li><%= @collection.book.size %></li>
+	<li><%= @collection.book.isbn10 %></li>
+	<li><%= @collection.book.isbn13 %></li>
+	<li><%= @collection.book.description %></li>
+</ul>
+<h3>이 책을 나누고 싶은 이유</h3>
+<p><%= @collection.memo %></p>

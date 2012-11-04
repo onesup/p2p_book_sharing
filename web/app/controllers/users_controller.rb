@@ -13,6 +13,13 @@ class UsersController < ApplicationController
   end
   
   def show
+    @user = User.find params[:id]
+    @collections = @user.collections
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @user }
+    end    
   end
   
   # GET /villages
