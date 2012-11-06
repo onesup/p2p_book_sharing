@@ -1,4 +1,3 @@
-
 class Book < ActiveRecord::Base
   has_many :collection
   
@@ -15,11 +14,5 @@ class Book < ActiveRecord::Base
     else
       limit(5).order("create_at desc")
     end
-  end
-  
-  def self.delete_duplicate
-    book_table = Arel::Table.new(:books)
-    latest_books = (Book.maximum :isbn13, :group => :isbn13).values
-    duplicated_books = Book.where(book_table[:isbn13].not_in(latest_books)).delete_all
   end
 end

@@ -2,6 +2,14 @@
 
 #How to run: just type in console, 'CrawlingBook.start'
 
+# 희귀사례 테스트용 url 
+# http://book.daum.net/detail/book.do?bookid=BOK00009259809YO
+# 책 크기 정보 없음. 책 소개 없음.
+# http://book.daum.net/detail/book.do?bookid=BOK00008912179BA
+# isbn, 책 크기 정보 없음.
+# http://book.daum.net/detail/book.do?bookid=KOR2005723000625
+# isbn 10만 없음.
+
 require 'open-uri'
 
 class CrawlingBook
@@ -72,7 +80,7 @@ class CrawlingBook
     url = url + "&pageNo=" + nav_info[:page].to_s
     begin
       doc = Nokogiri::HTML(open(url))
-    rescue "Errno::ECONNRESET"
+    rescue
       puts "connection error:::" + url
     end
     doc
@@ -93,42 +101,73 @@ class CrawlingBook
   def self.parse_item(url)
     url = "http://book.daum.net" + url
     item = Hash.new
-    doc = Nokogiri::HTML(open(url))
-    authors = Array.new
-    reviewed = 0
     begin
-      doc.xpath('//dd[@id="author_info"]//a').each{|x| authors << x.text.strip}
-      doc.xpath('//a[@class="quote_num"]').each{|x| reviewed = reviewed + x.text.to_i}
-      item[:url] = url
-      item[:author] = authors
-      item[:reviewed] = reviewed
-      item[:title] = doc.xpath('//div[@id="page_body"]//h2[@class="title"]/span').first.text
-      item[:series] = doc.xpath('//div[@id="page_body"]//h2[@class="title"]/span').last.text
-      item[:language] = doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[0].text.strip
-      item[:first_category] = doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[1].text.strip
-      item[:second_category] = doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[2].text.strip
-      item[:publisher] = doc.xpath('//dd[@id="publisher_info"]//a').text.strip
-      item[:published_at] = doc.xpath('//dd[@id="publisher_info"]').children[4].text.strip.to_date
-      if doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd').count == 5
-        item[:size] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].children[0].text.strip
-        item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].children[2].text.strip
-      else
-        item[:size] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].children[0].text.strip
-        item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].children[2].text.strip
+      doc = Nokogiri::HTML(open(url))
+      unless doc.xpath('//div[@id="error_content"]').nil?
+        authors = Array.new
+        reviewed = 0    
+        doc.xpath('//dd[@id="author_info"]//a').each{|x| authors << x.text.strip}
+        doc.xpath('//a[@class="quote_num"]').each{|x| reviewed = reviewed + x.text.to_i}
+        item[:url] = url
+        item[:author] = authors
+        item[:reviewed] = reviewed
+        item[:title] = doc.xpath('//div[@id="page_body"]//h2[@class="title"]/span').first.text
+        item[:series] = doc.xpath('//div[@id="page_body"]//h2[@class="title"]/span').last.text
+        item[:language] = doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[0].text.strip
+        item[:first_category] = doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[1].text.strip
+        if doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[2].nil?
+          item[:second_category] = nil
+        else
+          item[:second_category] = doc.xpath('//div[@id="page_body"]//div[@class="selectLay"]//strong')[2].text.strip
+        end
+        item[:publisher] = doc.xpath('//dd[@id="publisher_info"]//a').text.strip
+        item[:published_at] = doc.xpath('//dd[@id="publisher_info"]').children[4].text.strip.to_date
+        if doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd').count == 5
+          item[:size] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].children[0].text.strip
+          if item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].count == 0
+            item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].text.strip
+          else
+            item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].children[2].text.strip
+          end
+        else
+          item[:size] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].children[0].text.strip
+          item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].children[2].text.strip
+        end
+        if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children.count == 3 #한국 책
+          item[:isbn10] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[0].text.strip
+          item[:isbn13] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[2].text.strip
+        else #원제가 있는 번역 책
+          if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[0].nil?
+            item[:foreign_title] = nil
+          else
+            item[:foreign_title] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[0].text.strip
+          end
+          if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').count == 1
+            item[:isbn10] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').text.strip
+            item[:isbn13] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').text.strip
+          else
+            if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[2].nil?
+              item[:isbn10] = nil
+            else
+              item[:isbn10] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[2].text.strip
+            end
+            if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').empty?
+              item[:isbn13] = nil
+            else
+              item[:isbn13] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[4].text.strip
+            end
+          end
+        end
+        item[:price] = doc.xpath('//dd[@id="price_info"]//strike').text
+        item[:price] = /-?\d+(,?\d*)*\.?\d*/.match(item[:price])[0].to_i if item[:price].kind_of?(Array)
+        if doc.xpath('//div[@id="page_body"]//div[@class="introd"]/dl/dd').empty?
+          item[:description] = nil
+        else
+          item[:description] = doc.xpath('//div[@id="page_body"]//div[@class="introd"]/dl/dd').children[2..7].text.strip
+        end
+        item[:index] = doc.xpath('//div[@id="page_body"]//div[@class="book_table"]//div').text.strip
       end
-      if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children.count == 3 #한국 책
-        item[:isbn10] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[0].text.strip
-        item[:isbn13] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[2].text.strip
-      else #원제가 있는 번역 책
-        item[:foreign_title] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[0].text.strip
-        item[:isbn10] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[2].text.strip
-        item[:isbn13] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[4].text.strip
-      end
-      item[:price] = doc.xpath('//dd[@id="price_info"]//strike').text
-      item[:price] = /-?\d+(,?\d*)*\.?\d*/.match(item[:price])[0].to_i if item[:price].kind_of?(Array)
-      item[:description] = doc.xpath('//div[@id="page_body"]//div[@class="introd"]/dl/dd').children[2..7].text.strip
-      item[:index] = doc.xpath('//div[@id="page_body"]//div[@class="book_table"]//div').text.strip
-    rescue NoMethodError
+    rescue URI::InvalidURIError
       item[:url] = url
     end
     item
@@ -159,8 +198,8 @@ class CrawlingBook
     end
   end
   
-  def self.book_start(start_record)
-    start_record ||= 271227 #303685
+  def self.book_start(start_record = nil)
+    start_record ||= 418789 #350445
     BookUrl.all.each do |i|
       if i.id > start_record
         puts i.id
