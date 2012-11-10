@@ -9,6 +9,9 @@
 # isbn, 책 크기 정보 없음.
 # http://book.daum.net/detail/book.do?bookid=KOR2005723000625
 # isbn 10만 없음.
+# http://book.daum.net/detail/book.do?bookid=KOR9788906035555
+# 해당 책 정보는 제한되었습니다.
+# http://book.daum.net/detail/book.do?bookid=BOK00003309287IN
 
 require 'open-uri'
 
@@ -103,7 +106,7 @@ class CrawlingBook
     item = Hash.new
     begin
       doc = Nokogiri::HTML(open(url))
-      unless doc.xpath('//div[@id="error_content"]').nil?
+      if doc.xpath('//div[@id="error_content"]').empty? == true
         authors = Array.new
         reviewed = 0    
         doc.xpath('//dd[@id="author_info"]//a').each{|x| authors << x.text.strip}
@@ -131,7 +134,11 @@ class CrawlingBook
           end
         else
           item[:size] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].children[0].text.strip
-          item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].children[2].text.strip
+          if doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].count == 0
+            item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[3].text.strip
+          else
+            item[:last_page] = doc.xpath('//div[@id="page_body"]/div[@class="topContWrap"]/div[@class="bookInfoArea"]/dl[@class="info"]//dd')[2].children[2].text.strip
+          end
         end
         if doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children.count == 3 #한국 책
           item[:isbn10] = doc.xpath('//div[@id="etc_info"]//div[@class="textWrap"]').children[0].text.strip
@@ -199,7 +206,7 @@ class CrawlingBook
   end
   
   def self.book_start(start_record = nil)
-    start_record ||= 418789 #350445
+    start_record ||= 500000 #350445
     BookUrl.all.each do |i|
       if i.id > start_record
         puts i.id
@@ -216,15 +223,15 @@ class CrawlingBook
     [
       {:name => "독일 소설", :code => "KOR0112"} #for test. that category has just 87pages.
       
-      # {:name => "소설", :code => "KOR01"},
-      # {:name => "시·에세이", :code => "KOR03"},
-      # {:name => "경제·경영", :code => "KOR13"},
-      # {:name => "자기계발", :code => "KOR15"},
+      # {:name => "소설", :code => "KOR01"}, v
+      # {:name => "시·에세이", :code => "KOR03"}, v
+      # {:name => "경제·경영", :code => "KOR13"}, v
+      # {:name => "자기계발", :code => "KOR15"}, v
       # 
-      # {:name => "유아", :code => "KOR41"},
-      # {:name => "아동", :code => "KOR42"},
-      # {:name => "중·고 학습", :code => "KOR25"},
-      # {:name => "어린이영어", :code => "KOR45"},
+      # {:name => "유아", :code => "KOR41"}, v
+      # {:name => "아동", :code => "KOR42"}, v
+      # {:name => "중·고 학습", :code => "KOR25"}, v
+      # {:name => "어린이영어", :code => "KOR45"}, v
       
       # {:name => "초등학습", :code => "KOR39"},
       # {:name => "청소년", :code => "KOR38"},
@@ -241,10 +248,10 @@ class CrawlingBook
       # {:name => "사전", :code => "KOR37"},
       # {:name => "잡지", :code => "KOR35"},
       
-      # {:name => "만화", :code => "KOR47"},
-      # {:name => "인문", :code => "KOR05"},
-      # {:name => "종교", :code => "KOR21"},
-      # {:name => "정치사회", :code => "KOR17"},      
+      # {:name => "만화", :code => "KOR47"}, 2012. 11. 7
+      # {:name => "인문", :code => "KOR05"}, 2012. 11. 7
+      # {:name => "종교", :code => "KOR21"}, 2012. 11. 7
+      # {:name => "정치사회", :code => "KOR17"}, 2012. 11. 7     
       
       # {:name => "역사문화", :code => "KOR19"},
       # {:name => "과학", :code => "KOR29"},

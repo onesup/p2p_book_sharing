@@ -8,8 +8,8 @@ class Book < ActiveRecord::Base
     if search
       t = Book.arel_table
       q = t[:title].matches('%'+search+'%')
-      q = q.or(t[:series].matches('%'+search+'%'))
-      q = q.or(t[:main_author].eq(search))
+      # q = q.or(t[:series].matches('%'+search+'%'))
+      # q = q.or(t[:main_author].eq(search))
       Book.where(q)
     else
       limit(5).order("create_at desc")

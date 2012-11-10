@@ -20,12 +20,13 @@ class CreateBooks < ActiveRecord::Migration
       t.text :description
       t.text :index
       t.string :series
-      
-      t.add_index :title
-      t.add_index :series
-      t.add_index :isbn13
-      t.add_index :main_author
-      t.timestamps
+      timestamps
+    end
+    add_index :books, :title
+    add_index :books, :series
+    add_index :books, :isbn13
+    add_index :books, :main_author
+
     end
   end
 end

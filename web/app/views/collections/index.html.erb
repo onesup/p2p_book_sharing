@@ -2,7 +2,12 @@
 <h2>장서 추가</h2>
 <%= form_tag new_user_collection_path, :method => :get do %>
   <p>
-    <%= text_field_tag :q, params[:q] %>
+		<dl>
+			<dt>책 제목</dt>
+			</dd>
+				<%= text_field_tag :q, params[:q] %>
+			</dd>
+		</dl>
   </p>
 	<p>
 		<%= submit_tag 'Search', :name => nil %>
