@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(:version => 20121104171723) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "book_urls", ["url"], :name => "url"
-
   create_table "books", :force => true do |t|
     t.string   "url"
     t.string   "title"
@@ -44,12 +42,12 @@ ActiveRecord::Schema.define(:version => 20121104171723) do
     t.string   "series"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "collection_id"
   end
 
-  add_index "books", ["isbn13", "isbn10", "authors"], :name => "isbn10"
-  add_index "books", ["title"], :name => "series"
-  add_index "books", ["url"], :name => "url"
+  add_index "books", ["isbn13"], :name => "index_books_on_isbn13"
+  add_index "books", ["main_author"], :name => "index_books_on_main_author"
+  add_index "books", ["series"], :name => "index_books_on_series"
+  add_index "books", ["title"], :name => "index_books_on_title"
 
   create_table "collections", :force => true do |t|
     t.integer  "book_id"
@@ -89,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20121104171723) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "email",            :null => false
+    t.string   "email",                           :null => false
     t.string   "crypted_password"
     t.string   "salt"
     t.string   "head_title"
@@ -100,9 +98,17 @@ ActiveRecord::Schema.define(:version => 20121104171723) do
     t.integer  "book_count"
     t.integer  "deal_count"
     t.integer  "village_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "remember_me_token"
+    t.datetime "remember_me_token_expires_at"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
   end
+
+  add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token"
 
   create_table "villages", :force => true do |t|
     t.string   "url"

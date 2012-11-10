@@ -20,7 +20,7 @@ class CreateBooks < ActiveRecord::Migration
       t.text :description
       t.text :index
       t.string :series
-      timestamps
+      t.timestamps
     end
 
     add_index :books, :title
