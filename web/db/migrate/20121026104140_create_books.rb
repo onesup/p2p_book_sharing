@@ -22,11 +22,10 @@ class CreateBooks < ActiveRecord::Migration
       t.string :series
       timestamps
     end
+
     add_index :books, :title
     add_index :books, :series
     add_index :books, :isbn13
     add_index :books, :main_author
-
-    end
   end
 end
