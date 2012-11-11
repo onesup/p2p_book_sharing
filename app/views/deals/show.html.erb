@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Village:</b>
+  <%= @deal.village_id %>
+</p>
+
+<p>
+  <b>Seller:</b>
+  <%= @deal.seller_id %>
+</p>
+
+<p>
+  <b>Buyer:</b>
+  <%= @deal.buyer_id %>
+</p>
+
+<p>
+  <b>Collection:</b>
+  <%= @deal.collection_id %>
+</p>
+
+<p>
+  <b>Point:</b>
+  <%= @deal.point %>
+</p>
+
+<p>
+  <b>Mobile:</b>
+  <%= @deal.mobile %>
+</p>
+
+<p>
+  <b>Memo:</b>
+  <%= @deal.memo %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @deal.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_deal_path(@deal) %> |
+<%= link_to 'Back', deals_path %>

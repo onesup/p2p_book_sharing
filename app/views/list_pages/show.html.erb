@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Category:</b>
+  <%= @list_page.category %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @list_page.url %>
+</p>
+
+<p>
+  <b>Page:</b>
+  <%= @list_page.page %>
+</p>
+
+<p>
+  <b>Min value:</b>
+  <%= @list_page.min_value %>
+</p>
+
+<p>
+  <b>Max value:</b>
+  <%= @list_page.max_value %>
+</p>
+
+<p>
+  <b>Page action:</b>
+  <%= @list_page.page_action %>
+</p>
+
+
+<%= link_to 'Edit', edit_list_page_path(@list_page) %> |
+<%= link_to 'Back', list_pages_path %>

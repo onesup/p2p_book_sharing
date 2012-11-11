@@ -1,4 +1,16 @@
 P2pBookSharing::Application.routes.draw do
+  resources :deals
+
+  resources :collections
+
+  resources :book_urls
+
+  resources :list_pages
+
+  resources :books
+
+  resources :villages
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

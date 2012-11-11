@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Book:</b>
+  <%= @collection.book_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @collection.user_id %>
+</p>
+
+<p>
+  <b>Village:</b>
+  <%= @collection.village_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @collection.status %>
+</p>
+
+<p>
+  <b>Memo:</b>
+  <%= @collection.memo %>
+</p>
+
+<p>
+  <b>History:</b>
+  <%= @collection.history %>
+</p>
+
+<p>
+  <b>Isbn13:</b>
+  <%= @collection.isbn13 %>
+</p>
+
+
+<%= link_to 'Edit', edit_collection_path(@collection) %> |
+<%= link_to 'Back', collections_path %>

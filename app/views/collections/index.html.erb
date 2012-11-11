@@ -1,0 +1,35 @@
+<h1>Listing collections</h1>
+
+<table>
+  <tr>
+    <th>Book</th>
+    <th>User</th>
+    <th>Village</th>
+    <th>Status</th>
+    <th>Memo</th>
+    <th>History</th>
+    <th>Isbn13</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @collections.each do |collection| %>
+  <tr>
+    <td><%= collection.book_id %></td>
+    <td><%= collection.user_id %></td>
+    <td><%= collection.village_id %></td>
+    <td><%= collection.status %></td>
+    <td><%= collection.memo %></td>
+    <td><%= collection.history %></td>
+    <td><%= collection.isbn13 %></td>
+    <td><%= link_to 'Show', collection %></td>
+    <td><%= link_to 'Edit', edit_collection_path(collection) %></td>
+    <td><%= link_to 'Destroy', collection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Collection', new_collection_path %>

@@ -1,0 +1,89 @@
+<%= form_for(@book) do |f| %>
+  <% if @book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+      <% @book.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :foreign_titlefirst_category %><br />
+    <%= f.text_field :foreign_titlefirst_category %>
+  </div>
+  <div class="field">
+    <%= f.label :second_category %><br />
+    <%= f.text_field :second_category %>
+  </div>
+  <div class="field">
+    <%= f.label :authors %><br />
+    <%= f.text_field :authors %>
+  </div>
+  <div class="field">
+    <%= f.label :main_author %><br />
+    <%= f.text_field :main_author %>
+  </div>
+  <div class="field">
+    <%= f.label :publisher %><br />
+    <%= f.text_field :publisher %>
+  </div>
+  <div class="field">
+    <%= f.label :published_at %><br />
+    <%= f.text_field :published_at %>
+  </div>
+  <div class="field">
+    <%= f.label :language %><br />
+    <%= f.text_field :language %>
+  </div>
+  <div class="field">
+    <%= f.label :size %><br />
+    <%= f.text_field :size %>
+  </div>
+  <div class="field">
+    <%= f.label :last_page %><br />
+    <%= f.text_field :last_page %>
+  </div>
+  <div class="field">
+    <%= f.label :isbn10 %><br />
+    <%= f.text_field :isbn10 %>
+  </div>
+  <div class="field">
+    <%= f.label :isbn13 %><br />
+    <%= f.text_field :isbn13 %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :reviewed %><br />
+    <%= f.text_field :reviewed %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :index_page %><br />
+    <%= f.text_field :index_page %>
+  </div>
+  <div class="field">
+    <%= f.label :series %><br />
+    <%= f.text_field :series %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
