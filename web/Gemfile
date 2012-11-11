@@ -40,6 +40,10 @@ gem 'simple_form'
 #authentications
 gem "sorcery"
 
+#deploy
+gem 'unicorn'
+gem 'capistrano'
+
 #test
 group :development, :test do 
   gem 'rspec-rails'
