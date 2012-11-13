@@ -38,10 +38,17 @@ namespace :deploy do
   end
   after "deploy:setup", "deploy:setup_config"
 
-  task :symlink_config, roles: :app do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  desc "expand the gems"
+  task :gems, :roles => :app, :except => { :no_release => true } do
+    run "cd #{current_path}; #{shared_path}/bin/bundle unlock"
+    run "cd #{current_path}; nice -19 #{shared_path}/bin/bundle install vendor/" # nice -19 is very important otherwise DH will kill the process!
+    run "cd #{current_path}; #{shared_path}/bin/bundle lock"
   end
-  after "deploy:finalize_update", "deploy:symlink_config"
+    
+  # task :symlink_config, roles: :app do
+  #   run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  # end
+  # after "deploy:finalize_update", "deploy:symlink_config"
 
   desc "Make sure local git is in sync with remote."
   task :check_revision, roles: :web do
