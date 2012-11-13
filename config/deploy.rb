@@ -15,6 +15,9 @@ set :user, "moncl"
 set :deploy_to, "/home/#{user}/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
+set :default_environment, { "PATH" =>
+"$HOME/.rbenv/shims:$HOME/.rbenv/bin:$HOME/.rbenv/versions/1.9.3-p286/bin:$HOME/.rbenv/versions/1.9.3-p286/lib/ruby/gems/1.9.1/gems:$PATH"
+}
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
