@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  category: MyString
+  url: MyString
+  page: MyString
+  min_value: MyString
+  max_value: MyString
+  page_action: MyString
+
+two:
+  category: MyString
+  url: MyString
+  page: MyString
+  min_value: MyString
+  max_value: MyString
+  page_action: MyString

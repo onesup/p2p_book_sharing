@@ -1,0 +1,14 @@
+<h1>Listing users</h1>
+<%= link_to "CSV", villages_path(format: "csv")%>
+<table>
+	<% @users.each do |user| %>
+  <tr>
+    <td><%= user.id %></td>
+    <td><%= user.email %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Village', new_village_path %>

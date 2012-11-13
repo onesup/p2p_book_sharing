@@ -1,0 +1,11 @@
+<h1><%= @village.village %> 마을 장서</h1>
+<table>
+<% @collections.each do |collection| %>
+  <tr>
+    <td><%= link_to(collection.book.title, collection_path(collection)) %> - <%= collection.book.series %> | <%= collection.book.main_author%></td>
+    <td><%= collection.status %></td>
+    <td><%= collection.memo %></td>
+  </tr>
+<% end %>
+</table>
+

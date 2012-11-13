@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Buyer:</b>
+  <%= @deal.buyer %>
+</p>
+
+<p>
+  <b>Collection:</b>
+  <%= @deal.collection_id %>
+</p>
+
+<p>
+  <b>Point:</b>
+  <%= @deal.point %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @deal.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_deal_path(@deal) %> |
+<%= link_to 'Back', collection_path(@deal.collection) %>

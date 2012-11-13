@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  url: MyString
+  si: MyString
+  gu: MyString
+  dong: MyString
+  village: MyString
+
+two:
+  url: MyString
+  si: MyString
+  gu: MyString
+  dong: MyString
+  village: MyString

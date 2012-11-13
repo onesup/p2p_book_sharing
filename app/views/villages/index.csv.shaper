@@ -1,0 +1,4 @@
+csv.headers :village, :si, :gu, :dong
+csv.rows @villages do |csv, village|
+  csv.cells :village, :si, :gu, :dong
+end

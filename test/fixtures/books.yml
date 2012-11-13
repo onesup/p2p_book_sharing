@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  url: MyString
+  title: MyString
+  foreign_title: MyString
+  first_category: MyString
+  second_category: MyString
+  authors: MyString
+  main_author: MyString
+  publisher: MyString
+  published_at: MyString
+  language: MyString
+  size: MyString
+  last_page: MyString
+  isbn10: MyString
+  isbn13: MyString
+  price: MyString
+  reviewed: MyString
+  description: MyString
+  index: MyString
+  series: MyString
+
+two:
+  url: MyString
+  title: MyString
+  foreign_title: MyString
+  first_category: MyString
+  second_category: MyString
+  authors: MyString
+  main_author: MyString
+  publisher: MyString
+  published_at: MyString
+  language: MyString
+  size: MyString
+  last_page: MyString
+  isbn10: MyString
+  isbn13: MyString
+  price: MyString
+  reviewed: MyString
+  description: MyString
+  index: MyString
+  series: MyString

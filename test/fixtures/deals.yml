@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  village_id: MyString
+  seller_id: MyString
+  buyer_id: MyString
+  collection_id: MyString
+  point: MyString
+  mobile: MyString
+  memo: MyString
+  status: MyString
+
+two:
+  village_id: MyString
+  seller_id: MyString
+  buyer_id: MyString
+  collection_id: MyString
+  point: MyString
+  mobile: MyString
+  memo: MyString
+  status: MyString

@@ -1,0 +1,26 @@
+<h1>장서 관리</h1>
+<h2><%= @collection.book.title %> - <%= @collection.book.series %></h2>
+<ul>
+	<li><%= @collection.status %></li>
+	<li><%= @collection.book.main_author %></li>
+	<li><%= @collection.book.publisher %></li>
+	<li><%= @collection.book.size %></li>
+	<li><%= @collection.book.isbn10 %></li>
+	<li><%= @collection.book.isbn13 %></li>
+	<li><%= @collection.book.description %></li>
+</ul>
+
+<%= simple_form_for(@collection, :html => {:class => 'form-horizontal'}) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :memo, :label => "이 책을 나누고 싶은 이유" %>
+    <%= f.input :user_id, :as => :hidden, :input_html => { :value => params[:user_id] } %>
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "확인", :class => "btn btn-primary" %>
+    <%= link_to "취소", user_collections_path(params[:user_id]), :class => "btn" %> 
+  </div>
+<% end %>

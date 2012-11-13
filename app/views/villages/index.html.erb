@@ -1,0 +1,14 @@
+<h1>아파트 도서관</h1>
+<!-- <%= link_to "CSV", villages_path(format: "csv")%> -->
+<table>
+<% @villages.each do |village| %>
+  <tr>
+    <td><%= village.si %></td>
+    <td><%= village.gu %></td>
+    <td><%= village.dong %></td>
+    <td><%= link_to village.village, collections_village_path(village) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
