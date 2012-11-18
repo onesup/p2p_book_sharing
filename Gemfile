@@ -30,6 +30,8 @@ end
 gem 'csv_shaper'
 #parsing
 gem 'nokogiri'
+gem 'watir-webdriver'
+
 
 #jquery 
 gem 'jquery-rails'

@@ -1,0 +1,25 @@
+<div class="login">
+	<%= current_user %>
+	<h1>로그인</h1>
+	
+	<%= form_tag sessions_path do %>
+	  <div class="field">
+	    <%= label_tag :email, "이메일" %>
+	    <%= text_field_tag :email, params[:email], :placeholder => "이메일" %>
+	  </div>
+	  <div class="field">
+	    <%= label_tag :password, "패스워드" %>
+	    <%= password_field_tag :password,nil, :placeholder => "패스워드" %>
+	  </div>
+	  <div class="field">
+	    <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+	    <%= label_tag :remember_me %>
+	  </div>
+	  <div class="actions">
+	  	<%= submit_tag "로그인", :class => "btn btn-primary" %>
+	  	<!-- <%= submit_tag "회원가입", :class => "btn goto_signup" %> -->
+	  
+	  </div>
+	<% end %>
+	
+</div>

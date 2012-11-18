@@ -6,6 +6,7 @@ class CrawlingVillage
   #CrawlingVillage.start
         
   def self.put_item(item)
+    if item.exists?(:url)
     i         = Village.new
     i.url     = item[:url]
     i.si      = item[:si]
@@ -51,6 +52,33 @@ class CrawlingVillage
     end
     list
   end
+  
+  def self.get_danji_list(region)
+    profile = Selenium::WebDriver::Chrome::Profile.new
+    profile['download.prompt_for_download'] = false
+    profile['download.default_directory'] = "./"
+    b = Watir::Browser.new :chrome, :profile => profile
+    list = Array.new
+    url = "http://realestate.daum.net" + region[:url]
+    begin
+    b.goto url
+    doc = Nokogiri::HTML(b.html)
+    if doc.xpath("//ul[@id='danjiListScope']//li[@class='no_data']").empty?
+      doc.xpath("//ul[@id='danjiListScope']//li").each do |li|
+        list << {
+          :region => li.xpath("span[@class='name']/a[@class='name_link']").text,
+          :url => li.xpath("span[@class='name']/a[@class='name_link']").first["href"]
+        }
+      end
+    else
+      list << {:region => "아파트 없음", :url => ""}
+    end
+    rescue
+      list << {:region => "뭔가 에러 발생", :url => ""}
+    end
+    b.close
+    list
+  end
         
   def self.start
     sido_list = CrawlingVillage.sido
@@ -58,7 +86,7 @@ class CrawlingVillage
     sido_list.each do |sido|
       CrawlingVillage.get_list(sido).each do |gu|
         CrawlingVillage.get_list(gu).each do |dong|
-          CrawlingVillage.get_list(dong).each do |village|
+          CrawlingVillage.get_danji_list(dong).each do |village|
             puts sido[:region] + " " + gu[:region]+ " " + dong[:region]+ " " + village[:region]
             village = {
               :si    => sido[:region], 

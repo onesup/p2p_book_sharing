@@ -10,7 +10,43 @@ class VillagesController < ApplicationController
       format.csv { render csv: @villages }
     end
   end
-
+  
+  def si_list
+    @si_list = Village.si_list
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @villages }
+      format.csv { render csv: @villages }
+    end
+  end
+  
+  def gu_list
+    @gu_list = Village.gu_list(params[:si])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @villages }
+      format.csv { render csv: @villages }
+    end
+  end
+  
+  def dong_list
+    @dong_list = Village.dong_list(params[:si], params[:gu])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @villages }
+      format.csv { render csv: @villages }
+    end
+  end
+  
+  def village_list
+    @village_list = Village.village_list(params[:si], params[:gu], params[:dong])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @villages }
+      format.csv { render csv: @villages }
+    end
+  end
+  
   # GET /villages/1
   # GET /villages/1.json
   def show

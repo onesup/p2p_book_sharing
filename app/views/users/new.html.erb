@@ -2,6 +2,7 @@
 	<h1 class="title">회원가입</h1>
 	
 	<%= simple_form_for(@user, :html => {:class => 'form-horizontal' }) do |f| %>
+	<%= f.input :village_id, :as => :hidden, :input_html => {:value => session[:village].id} %>
 	<%= f.input :email, :label => '이메일', :placeholder => "이메일"  %>
 	  <%= f.input :password, :label => '패스워드', :placeholder => "패스워드", :hint => '특수문자를 제외한 1글자 ~ 20글자 이하' %>
 	  <%= f.input :password_confirmation, :label => '패스워드 확인', :placeholder => "패스워드 확인", :hint => '특수문자를 제외한 1글자 ~ 20글자 이하' %>

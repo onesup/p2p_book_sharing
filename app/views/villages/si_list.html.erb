@@ -1,0 +1,7 @@
+<p>안녕하세요. 아파트 도서관입니다.</p> 
+<p>어디에 살고계신가요?</p>
+<ul>
+<% @si_list.each do |si| %>
+<li><%= link_to si, gu_list_path(si) %></li>
+<% end %>
+</ul>

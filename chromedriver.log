@@ -1,0 +1,87 @@
+[0.000][INFO]:      ChromeDriver 23.0.1240.0 /usr/bin/chromedriver
+[0.215][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chrome.detach": true,
+   "chrome.extensions": [  ],
+   "chrome.profile": "UEsDBBQAAAAIABUockE/dnprPQAAAEMAAAATAAAARGVmYXVsdC9QcmVmZXJlbmNlc6tWSskvz8vJT0xRsqpWKijKzy0oiU/LL...",
+   "chromeOptions": {
+      "detach": true,
+      "extensions": [  ],
+      "profile": "UEsDBBQAAAAIABUockE/dnprPQAAAEMAAAATAAAARGVmYXVsdC9QcmVmZXJlbmNlc6tWSskvz8vJT0xRsqpWKijKzy0oiU/LL..."
+   },
+   "cssSelectorsEnabled": true,
+   "javascriptEnabled": true,
+   "nativeEvents": false,
+   "platform": "ANY",
+   "rotatable": false,
+   "takesScreenshot": false,
+   "version": ""
+}
+
+[0.220][INFO]:      Using named testing interface
+[1.986][INFO]:      Connected to Chrome successfully. Version: 23.0.1271.64
+[1.998][FINE]:      Command received (/session/634f411041f8aa04bd4635f324f96b13)
+[1.998][FINE]:      Command finished (/session/634f411041f8aa04bd4635f324f96b13) with response {
+   "sessionId": "634f411041f8aa04bd4635f324f96b13",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "23.0.1240.0",
+      "chrome.nativeEvents": false,
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "mac",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "23.0.1271.64",
+      "webStorageEnabled": true
+   }
+}
+
+[2.000][FINE]:      Command received (/session/634f411041f8aa04bd4635f324f96b13/url) with params {
+   "url": "http://realestate.daum.net/maemul/area/3690100/A1A3A4/*/maemullist?nil_profile=estatetop&nil_left..."
+}
+
+[2.000][FINER]:     Waiting for all views to stop loading...
+[2.006][FINER]:     Done waiting for all views to stop loading
+[4.945][FINER]:     Waiting for all views to stop loading...
+[4.945][FINER]:     Done waiting for all views to stop loading
+[4.945][FINE]:      Command finished (/session/634f411041f8aa04bd4635f324f96b13/url) with response {
+   "sessionId": "634f411041f8aa04bd4635f324f96b13",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[4.951][FINE]:      Command received (/session/634f411041f8aa04bd4635f324f96b13/url)
+[4.951][FINER]:     Waiting for all views to stop loading...
+[4.952][FINER]:     Done waiting for all views to stop loading
+[4.957][FINER]:     Waiting for all views to stop loading...
+[4.957][FINER]:     Done waiting for all views to stop loading
+[4.957][FINE]:      Command finished (/session/634f411041f8aa04bd4635f324f96b13/url) with response {
+   "sessionId": "634f411041f8aa04bd4635f324f96b13",
+   "status": 0,
+   "value": "http://realestate.daum.net/maemul/area/3690100/A1A3A4/*/maemullist?nil_profile=estatetop&nil_left..."
+}
+
+[4.959][FINE]:      Command received (/session/634f411041f8aa04bd4635f324f96b13/source)
+[4.959][FINER]:     Waiting for all views to stop loading...
+[4.960][FINER]:     Done waiting for all views to stop loading
+[5.007][FINER]:     Waiting for all views to stop loading...
+[5.008][FINER]:     Done waiting for all views to stop loading
+[5.008][FINE]:      Command finished (/session/634f411041f8aa04bd4635f324f96b13/source) with response {
+   "sessionId": "634f411041f8aa04bd4635f324f96b13",
+   "status": 0,
+   "value": "\u003C!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose...."
+}
+
+[5.040][FINE]:      Command received (/session/634f411041f8aa04bd4635f324f96b13)
+[5.263][INFO]:      Chrome shutdown

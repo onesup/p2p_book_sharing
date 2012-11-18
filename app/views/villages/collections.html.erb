@@ -1,11 +1,32 @@
-<h1><%= @village.village %> 마을 장서</h1>
-<table>
-<% @collections.each do |collection| %>
-  <tr>
-    <td><%= link_to(collection.book.title, collection_path(collection)) %> - <%= collection.book.series %> | <%= collection.book.main_author%></td>
-    <td><%= collection.status %></td>
-    <td><%= collection.memo %></td>
-  </tr>
+<%=content_for :village do %>
+	<%= @village.village %>
 <% end %>
+<% unless @collections.empty? %>
+<h2><%= @village.village %> 마을 장서</h2>
+<table>	
+	<% @collections.each do |collection| %>
+	  <tr>
+	    <td><%= link_to(collection.book.title, collection_path(collection)) %> - <%= collection.book.series %> | <%= collection.book.main_author%></td>
+	    <td><%= collection.status %></td>
+	    <td><%= collection.memo %></td>
+	  </tr>
+	<% end %>
+<% else%>
+<p><%= @village.village%> 마을은 아직 '아파트 도서관 프로젝트' 시작 전입니다.</p>
+<blockquote cite="">
+	<% if Time.now.to_i % 2 == 1 %>
+	<p>평화가 우리에게 없다면, 우리는 함께라는 것을 잊고 있기 때문일겁니다.</p>
+	<p>If we have no peace, it is because we have forgotten that we belong to each other.</p>
+	<footer>-Mother Teresa</footer>
+	<% else %>
+	<p>나누는 법을 알기 때문에, 우리 모두는 대단해 질 수 있어요.</p>
+	<p>Everyone can be great, because everyone can serve.</p>
+	<footer>-Martin Luther King, Jr.</footer>
+	<% end %>
+</blockquote>
+<%= link_to "아파트 도서관 시작하기", guide_users_path %>
+<% session[:village] = @village %>
+<% end %>
+
 </table>
 

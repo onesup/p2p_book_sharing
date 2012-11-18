@@ -1,16 +1,14 @@
 P2pBookSharing::Application.routes.draw do
-
   resources :deals
-
   resources :collections do
     resources :deals
   end
-
   resources :sessions
-  
   resources :password_resets
-
   resources :users do
+    collection do
+      get 'guide'
+    end
     resources :deals
     resources :collections do
       collection do
@@ -18,12 +16,16 @@ P2pBookSharing::Application.routes.draw do
       end
     end
   end
-
   resources :villages do
     member do
       get :collections
     end
   end
+  
+  match "/cities" => 'villages#si_list', :as => "cities"
+  match "/:si/list" => 'villages#gu_list', :as => "gu_list"
+  match "/:si/:gu/list" => 'villages#dong_list', :as => "dong_list"
+  match "/:si/:gu/:dong/list" => 'villages#village_list', :as => "village_list"
 
   get "logout"  => "sessions#destroy", :as => "logout"
   get "login"   => "sessions#new", :as => "login"
@@ -36,56 +38,7 @@ P2pBookSharing::Application.routes.draw do
 
   resources :books
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'villages#index'
+  root :to => 'villages#si_list'
 
   # See how all your routes lay out with "rake routes"
 

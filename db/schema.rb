@@ -89,21 +89,18 @@ ActiveRecord::Schema.define(:version => 20121113094100) do
   add_index "list_pages", ["url"], :name => "index_list_pages_on_url"
 
   create_table "users", :force => true do |t|
-    t.string   "username",                        :null => false
-    t.string   "email"
+    t.string   "username"
+    t.string   "email",                        :null => false
     t.string   "crypted_password"
     t.string   "salt"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
     t.string   "remember_me_token"
     t.datetime "remember_me_token_expires_at"
-    t.string   "reset_password_token"
-    t.datetime "reset_password_token_expires_at"
-    t.datetime "reset_password_email_sent_at"
+    t.integer  "village_id"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token"
 
   create_table "villages", :force => true do |t|
     t.string   "url"

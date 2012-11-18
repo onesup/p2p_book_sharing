@@ -14,16 +14,20 @@
 	</p>
 <% end %>
 <h2>현재 장서</h2>
+<% unless @collections.empty? %>
 <table>
-<% @collections.each do |collection| %>
-  <tr>
-    <td><%= link_to collection.book.title, edit_user_collection_path(params[:user_id], collection.id) %> - <%= collection.book.series %> | <%= collection.book.main_author%></td>
-    <td><%= collection.status %></td>
-    <td><%= collection.memo %></td>
-    <td><%= link_to '삭제', collection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+	<% @collections.each do |collection| %>
+	  <tr>
+	    <td><%= link_to collection.book.title, edit_user_collection_path(params[:user_id], collection.id) %> - <%= collection.book.series %> | <%= collection.book.main_author%></td>
+	    <td><%= collection.status %></td>
+	    <td><%= collection.memo %></td>
+	    <td><%= link_to '삭제', collection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	  </tr>
+	<% end %>
 </table>
+<% else %>
+	<p>현재 등록된 장서가 없습니다.</p>
+<% end %>
 
 <br />
 

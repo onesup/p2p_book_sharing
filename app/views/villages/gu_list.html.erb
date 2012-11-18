@@ -1,0 +1,7 @@
+<h2><%= link_to params[:si], root_path %></h2>
+<p>살고계신 동네를 알려주세요.</p>
+<ul>
+	<% @gu_list.each do |gu| %>
+	<li><%= link_to gu.gu, dong_list_path(gu.si, gu.gu) %></li>
+	<% end %>
+</ul>

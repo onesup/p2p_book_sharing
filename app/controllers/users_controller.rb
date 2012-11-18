@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
+    if session[:village].nil?
+      redirect_to root_path, :notice => "city"
+    end
   end
   
   def create

@@ -6,7 +6,7 @@ class CollectionsController < ApplicationController
   # GET /collections
   # GET /collections.json
   def index
-    if params[:user_id]
+    if params[:user_id] or logged_in?
       @collections = @user.collections.order("updated_at desc")
     end
     respond_to do |format|
@@ -91,6 +91,8 @@ private
   def get_user
   	if params[:user_id] && User.exists?(params[:user_id])
       @user = User.find(params[:user_id])
+    elsif logged_in?
+      @user = current_user
     end
   end
   

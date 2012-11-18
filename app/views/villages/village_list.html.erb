@@ -1,0 +1,7 @@
+<h2><%= link_to put_gu_dong, dong_list_path(params[:si], params[:gu]), :title => params[:gu]+" 에서 다시 고르기" %><h2>
+<p>살고계신 아파트를 알려주세요.</p>
+<ul>
+	<% @village_list.each do |village| %>
+	<li><%= link_to village.village + " 아파트", collections_village_path(village) %></li>
+	<% end %>
+</ul>
