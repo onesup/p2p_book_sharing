@@ -2,11 +2,11 @@
 <%= @user.village.village %>
 <% end %>
 <h2><%= @user.email %>님의 장서</h2>
-<h2>장서 추가</h2>
+<h2>이웃과 나눌 장서를 등록해주세요.</h2>
 <%= form_tag new_user_collection_path, :method => :get do %>
   <p>
 		<dl>
-			<dt>책 제목</dt>
+			<dt>책 제목을 넣어주세요. (책 검색 시간이 꽤 깁니다. 조금만 기다려주세요.)</dt>
 			</dd>
 				<%= text_field_tag :q, params[:q] %>
 			</dd>
@@ -31,7 +31,3 @@
 <% else %>
 	<p>현재 등록된 장서가 없습니다.</p>
 <% end %>
-
-<br />
-
-<%= link_to 'New Collection', new_user_collection_path %>

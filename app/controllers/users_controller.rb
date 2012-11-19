@@ -6,10 +6,16 @@ class UsersController < ApplicationController
     end
   end
   
+  def guide
+    if session[:village].nil?
+      redirect_to root_path, :notice => "city"
+    end
+  end
+  
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to root_url, :notice => "Signed up!"
+      redirect_to login_path, :notice => "Signed up!"
     else
       render :new
     end
