@@ -1,4 +1,0 @@
-csv.headers :id, :url, :page, :min_value, :max_value, :page_action
-csv.rows @list_pages do |csv, page|
-  csv.cells :id, :url, :page, :min_value, :max_value, :page_action
-end
