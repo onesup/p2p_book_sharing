@@ -1,4 +1,7 @@
-<h1><%= @collection.user.email %>님의 장서</h1>
+<% content_for :village do %>
+<%= @collection.user.village.village %>
+<% end %>
+<h2><%= @collection.user.email %>님의 장서</h2>
 <ul>
 	<li><%= link_to "빌려볼래요", new_collection_deal_path(@collection.id)%></li>
 </ul>

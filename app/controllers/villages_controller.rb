@@ -12,11 +12,15 @@ class VillagesController < ApplicationController
   end
   
   def si_list
-    @si_list = Village.si_list
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @villages }
-      format.csv { render csv: @villages }
+    if current_user == false
+      @si_list = Village.si_list
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @villages }
+        format.csv { render csv: @villages }
+      end
+    else
+      redirect_to collections_village_path(current_user.village)
     end
   end
   

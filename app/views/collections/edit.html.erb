@@ -1,4 +1,7 @@
-<h1>장서 관리</h1>
+<% content_for :village do %>
+<%= @collection.user.village.village %>
+<% end %>
+<h2>장서 관리</h2>
 <h2><%= @collection.book.title %> - <%= @collection.book.series %></h2>
 <ul>
 	<li><%= @collection.status %></li>
