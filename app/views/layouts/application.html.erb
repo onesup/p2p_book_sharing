@@ -16,12 +16,16 @@
 			<% if logged_in? %>
 				<li><%= link_to "로그아웃", logout_path %></li>
 			<% else %>
-				<li><%= link_to "참여하기", signup_path %></li>
+				<% unless params[:action] == 'si_list' or params[:action] == 'gu_list' or params[:action] == 'dong_list' or params[:action] == 'village_list'%>
+					<li><%= link_to "참여하기", signup_path %></li>
+				<% end %>
 				<li><%= link_to "로그인", login_path %></li>
 			<% end %>
 		</ul>
-		<p><%= link_to "제작자에게 제안하기", "https://www.facebook.com/groups/518765154800623/" %></p>
 		<%= yield %>
+		<footer>
+		<p><%= link_to "제작자에게 기능 제안하기", "https://www.facebook.com/groups/518765154800623/" %></p>
+		</footer>
 	</div>
 </body>
 </html>
