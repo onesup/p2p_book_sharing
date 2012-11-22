@@ -9,5 +9,5 @@ worker_processes 2
 timeout 30
 
 before_exec do |server| 
-  ENV["BUNDLE_GEMFILE"] = "/path/to/app/current/Gemfile" 
+  ENV["BUNDLE_GEMFILE"] = "/p2p_book_sharing/current/Gemfile" 
 end
