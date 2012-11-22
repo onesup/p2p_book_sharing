@@ -3,8 +3,14 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.limit(20)
-
+    if params[:query].present?
+      @books = Book.search(params)
+    else
+      @books = Book.find(:all, :offset => 0, :limit => 10) # TODO: pagination
+    end
+    
+    puts @books[1].title
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @books }
