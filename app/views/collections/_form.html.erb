@@ -1,3 +1,17 @@
+<%= form_tag new_user_collection_path, :method => :get do %>
+  <p>
+		<dl>
+			<dt>제목·저자와 같은 책 정보를 넣어주세요.</dt>
+			</dd>
+				<%= text_field_tag :q, params[:q] %>
+			</dd>
+		</dl>
+  </p>
+	<p>
+		<%= submit_tag 'Search', :name => nil %>
+	</p>
+<% end %>
+
 <%= simple_form_for(@collection, :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.error_notification %>
 

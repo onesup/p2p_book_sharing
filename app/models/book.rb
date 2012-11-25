@@ -7,10 +7,21 @@ class Book < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
   
-  def self.search(params)
-    tire.search(page: params[:page], per_page: 5) do
-      query { string params[:query], default_operator: "AND" } if params[:query].present?
+  # def self.search(params)
+  #   Tire.search(page: params[:page], per_page: 5) do
+  #     query { string params[:query], default_operator: "AND" } if params[:query].present?
+  #   end
+  # end
+
+  def self.search(q)
+    search = Tire.search 'books' do
+      query do
+        string q, :default_operator => "AND"
+      end
     end
+    search.sort{by :published_at, 'desc'}
+    
+    search.results
   end
   
   # def self.search(search)
